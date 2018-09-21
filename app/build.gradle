@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+//获取当前时间
+def getCurrentTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -8,14 +13,70 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            shrinkResources false
+//            zipAlignEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//        debug {
+//            minifyEnabled false
+//            shrinkResources false
+//            zipAlignEnabled false
+//        }
+//
+//        custom {
+//            minifyEnabled false
+//            shrinkResources false
+//            zipAlignEnabled false
+//        }
+//
+//        sourceSets {
+//            main {
+//                jni.srcDirs = []
+//            }
+//        }
+//    }
+    signingConfigs {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            storeFile file('D:\\key\\testkey.jks') //绝对路径
+            storePassword "111111"
+            keyAlias "key"
+            keyPassword "111111"
         }
     }
+
+/*apk重命名*/
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "jnbank_launcher-${buildType.name}-${defaultConfig.versionName}.apk"
+
+        }
+    }
+
+
+    /*多渠道包*/
+    productFlavors{
+        tencent{
+            applicationId "com.test.day"
+            manifestPlaceholders = [appName: "tencent"]
+        }
+
+        baidu{
+            applicationId "com.test.day"
+            manifestPlaceholders = [appName: "baidu"]
+        }
+
+        wandoujia { manifestPlaceholders = [MTA_CHANNEL_VALUE: "wandoujia"] }
+        xiaomi { manifestPlaceholders = [MTA_CHANNEL_VALUE: "xiaomi"] }
+
+
+    }
+
 }
 
 dependencies {
