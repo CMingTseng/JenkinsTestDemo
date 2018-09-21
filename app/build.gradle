@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 //获取当前时间
-def getCurrentTime() {
+def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
@@ -50,14 +50,17 @@ android {
         }
     }
 
+
+
+
+
 /*apk重命名*/
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "jnbank_launcher-${buildType.name}-${defaultConfig.versionName}.apk"
+            outputFileName = "${variant.productFlavors[0].name}_v${defaultConfig.versionName}_${releaseTime()}.apk"
 
         }
     }
-
 
     /*多渠道包*/
     productFlavors{
