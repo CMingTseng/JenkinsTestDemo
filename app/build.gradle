@@ -19,34 +19,10 @@ android {
 
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
-//    buildTypes {
-//        release {
-//            minifyEnabled false
-//            shrinkResources false
-//            zipAlignEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
-//        debug {
-//            minifyEnabled false
-//            shrinkResources false
-//            zipAlignEnabled false
-//        }
-//
-//        custom {
-//            minifyEnabled false
-//            shrinkResources false
-//            zipAlignEnabled false
-//        }
-//
-//        sourceSets {
-//            main {
-//                jni.srcDirs = []
-//            }
-//        }
-//    }
+
     signingConfigs {
         release {
-            storeFile file('D:\\key\\testkey.jks') //绝对路径
+            storeFile file('D:\\key\\jenkinskey.jks') //绝对路径
             storePassword "111111"
             keyAlias "key"
             keyPassword "111111"
@@ -54,25 +30,24 @@ android {
     }
 
 
-
-
-
 /*apk重命名*/
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "${variant.productFlavors[0].name}_v${defaultConfig.versionName}_${releaseTime()}.apk"
+            outputFileName = variant.productFlavors[0].name + new Date().format('yyyyMMddHHmmss') + '-' + variant.buildType.name + '.apk'
 
         }
     }
-
+    flavorDimensions "market"
     /*多渠道包*/
     productFlavors{
         tencent{
+            dimension "market"
             applicationId "com.test.day"
             manifestPlaceholders = [appName: "tencent"]
         }
 
         baidu{
+            dimension "market"
             applicationId "com.test.day"
             manifestPlaceholders = [appName: "baidu"]
         }
