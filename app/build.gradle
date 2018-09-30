@@ -29,7 +29,6 @@ android {
         }
     }
 
-
 /*apk重命名*/
     android.applicationVariants.all { variant ->
         variant.outputs.all {
@@ -39,23 +38,29 @@ android {
     }
     flavorDimensions "market"
     /*多渠道包*/
-    productFlavors{
-        tencent{
+    productFlavors {
+        tencent {
             dimension "market"
             applicationId "com.test.day"
-            manifestPlaceholders = [appName: "tencent"]
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "tencent"]
         }
 
-        baidu{
+        baidu {
             dimension "market"
             applicationId "com.test.day"
-            manifestPlaceholders = [appName: "baidu"]
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
         }
 
-        wandoujia { manifestPlaceholders = [MTA_CHANNEL_VALUE: "wandoujia"] }
-        xiaomi { manifestPlaceholders = [MTA_CHANNEL_VALUE: "xiaomi"] }
-
-
+        wandoujia {
+            dimension "market"
+            applicationId "com.test.day"
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
+        xiaomi {
+            dimension "market"
+            applicationId "com.test.day"
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
     }
 
 }
